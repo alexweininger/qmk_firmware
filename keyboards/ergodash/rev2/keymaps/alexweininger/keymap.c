@@ -34,6 +34,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #define EISU MO(_ADJUST)
 #define ADJ MO(_ADJUST)
+#define ARR LT(ARROWS, KC_TAB)
+#define LO_ENT LT(_LOWER, KC_ENT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -51,11 +53,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,----------------------------------------------------------------------------------------------------------------------.
    */
   [_QWERTY] = LAYOUT( \
-    KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_MINS,                        KC_EQL, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_END, \
-    KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_LCBR,                        KC_RBRC , KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_HOME, \
-    LT(ARROWS, KC_TAB),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_DEL ,                        KC_BSPC, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_LALT ,                        RAISE , KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS, \
-    KC_LCTL, KC_LGUI, KC_LEAD, EISU,             TD(TD_CAPS),   KC_LCTL ,KC_BSPC,        KC_SPC, KC_ENT , LT(_LOWER, KC_ENT),  KC_LEFT,   KC_DOWN, KC_UP,   KC_RGHT  \
+    KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_MINS,                        KC_EQL ,    KC_6,    KC_7,    KC_8,       KC_9,    KC_0,    KC_END, \
+    KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_LCBR,                        KC_RBRC,    KC_Y,    KC_U,    KC_I,      KC_O,     KC_P,    KC_HOME, \
+    ARR   ,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_DEL ,                        KC_BSPC,    KC_H,    KC_J,    KC_K,      KC_L,     KC_SCLN, KC_QUOT, \
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_LALT,                        RAISE  ,    KC_N,    KC_M,    KC_COMM,   KC_DOT,   KC_SLSH, KC_BSLS, \
+    KC_LCTL, KC_LGUI, KC_LEAD, EISU,             TD(TD_CAPS),   KC_LCTL ,KC_BSPC,        KC_SPC,     KC_ENT,   LO_ENT,  KC_LEFT,   KC_DOWN,  KC_UP,   KC_RGHT  \
   ),
 
   /* Lower
@@ -71,11 +73,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * | Ctrl |  GUI |  ALt | EISU |||||||| Lower| Space|      ||||||||      | Enter| Raise|||||||| Home |PageDn|PageUp|  End |
    * ,----------------------------------------------------------------------------------------------------------------------.   */
   [_LOWER] = LAYOUT(
-    KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_UNDS,                        KC_PLUS, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,  \
-    KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LCBR,                        KC_RCBR, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE, \
-    KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_DEL ,                        KC_DEL, KC_H,    KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_COLN, KC_DQT , \
-    KC_LSFT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC ,                        KC_ENT , KC_N,    KC_M,    KC_LT,   KC_GT,   KC_QUES, KC_RSFT, \
-    _______, KC_LGUI, _______, ADJ,             KC_LSFT,   KC_SPC ,LCTL(KC_DEL),        _______,KC_ENT , RAISE,            KC_HOME, KC_PGDN, KC_PGUP, KC_END   \
+    KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_UNDS,                        KC_PLUS, KC_F6,   KC_F7,      KC_F8,      KC_F9,      KC_F10,    KC_F12,  \
+    KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LCBR,                        KC_RCBR, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN,    KC_RPRN,   KC_PIPE, \
+    KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_DEL ,                        KC_DEL,  KC_H,    KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_COLN,   KC_DQT , \
+    KC_LSFT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC ,                        KC_ENT , KC_N,    KC_M,       KC_LT,      KC_GT,      KC_QUES,   KC_RSFT, \
+    _______, KC_LGUI, _______, ADJ,             KC_LSFT,   KC_SPC ,LCTL(KC_DEL),        _______,KC_ENT , RAISE,         KC_HOME,    KC_PGDN,    KC_PGUP,   KC_END   \
   ),
 
   /* Raise
@@ -217,4 +219,63 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
   }
   return true;
+}
+
+// RGB Modes
+// 1 = Static
+// 2-5 = Breathing
+// 6-8 = Rainbow
+// 9-14 = Swirl
+// 15-20 = Snake
+// 21-24 = Nightrider
+// 25 = Christmas
+// 26-30 = Static Gradient
+const uint8_t RGBLED_RAINBOW_SWIRL_INTERVALS[] PROGMEM = {100, 50, 10}; // Set the last one to 10ms for some speedy swirls
+
+uint8_t prev = _QWERTY;
+uint32_t check;
+uint32_t desired = 9;
+
+void matrix_init_user() {
+    rgblight_mode(desired);
+}
+
+uint32_t layer_state_set_user(uint32_t state) {
+  uint8_t layer = biton32(state);
+  if (prev!=_ADJUST) {
+      switch (layer) {
+        case _QWERTY:
+          rgblight_mode(desired);
+          break;
+
+        case _LOWER: // If we're in swirl mode, then speed up the swirls, otherwise breathe
+          check = rgblight_get_mode();
+          if (check > 8 && check < 15) {
+            rgblight_mode(14);
+          } else {
+            rgblight_mode(5);
+          }
+          break;
+
+        case _RAISE: // Same as above but reverse direction, otherwise nightrider
+          check = rgblight_get_mode();
+          if (check > 8 && check < 15) {
+            rgblight_mode(13);
+          } else {
+            rgblight_mode(23);
+          }
+          break;
+
+        case _ARROWS:
+          rgblight_setrgb_at(0xff, 0x0, 0x0, 1);
+          break;
+
+        case _ADJUST:
+          break;
+      }
+  } else {
+      desired = rgblight_get_mode();
+  }
+  prev = layer;
+  return state;
 }
