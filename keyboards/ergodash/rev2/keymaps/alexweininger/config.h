@@ -49,5 +49,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
 #define NO_PRINT
 #endif // !NO_PRINT
-#define LEADER_TIMEOUT 300
+#define LEADER_TIMEOUT 200
 #define LEADER_PER_KEY_TIMING
