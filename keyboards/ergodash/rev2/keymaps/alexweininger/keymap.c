@@ -36,6 +36,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 // Other declarations would go here, separated by commas, if you have them
 };
 
+#define LOW MO(_LOWER)
+#define RSE MO(_RAISE)
 #define EISU MO(_ADJUST)
 #define ADJ MO(_ADJUST)
 #define ARR MO(_ARROWS)
@@ -44,7 +46,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define TAB_ARR LT(_ARROWS, KC_TAB)
 #define HHOME LSFT(KC_HOME)
 #define HEND LSFT(KC_END)
-
+#define HOMEEND TD(TD_HOMEEND)
+#define SHIFCAP TD(TD_CAPS)
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Qwerty
@@ -61,11 +64,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,----------------------------------------------------------------------------------------------------------------------.
    */
   [_QWERTY] = LAYOUT(
-    KC_ESC,  KC_1,      KC_2,    KC_3,    KC_4,    KC_5,          TD(TD_UND),                    KC_EQL ,    KC_6,    KC_7,    KC_8,       KC_9,    KC_0,    KC_BSLS, \
-    KC_GRV,  KC_Q,      KC_W,    KC_E,    KC_R,    KC_T,          KC_LBRC,                       KC_RBRC,    KC_Y,    KC_U,    KC_I,      KC_O,     KC_P,    KC_HOME, \
-    TAB_ARR,  KC_A,      KC_S,    KC_D,    KC_F,    KC_G,          TD(TD_HOMEEND),                KC_BSPC,    KC_H,    KC_J,    KC_K,      KC_L,     KC_SCLN, KC_QUOT, \
-    ARR,     KC_Z,      KC_X,    KC_C,    KC_V,    KC_B,          KC_LALT,                       RAISE  ,    KC_N,    KC_M,    KC_COMM,   KC_DOT,   KC_SLSH, _______, \
-    KC_LGUI, KC_LGUI,   EISU,    KC_LEAD,          TD(TD_CAPS),   KC_LCTL  ,    KC_BSPC,         KC_SPC,     RA_ENT,  LO_ENT,  KC_LEFT,   KC_DOWN,  KC_UP,   KC_RGHT  \
+    KC_ESC , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , TD(TD_UND),                    KC_EQL , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_BSLS, \
+    KC_GRV , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_LBRC,                       KC_RBRC, KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_HOME, \
+    TAB_ARR, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , HOMEEND,                       KC_BSPC, KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT, \
+    ARR    , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_LALT,                       KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_ENT , \
+    KC_LCTL, KC_LGUI, KC_LALT , KC_LEAD,         SHIFCAP, KC_LCTL, RSE,         KC_SPC, LOW    , SHIFCAP,          KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT  \
   ),
 
   /* Lower
@@ -82,11 +85,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,----------------------------------------------------------------------------------------------------------------------.
    */
   [_LOWER] = LAYOUT(
-    KC_F11,LGUI(KC_1),LGUI(KC_2),LGUI(KC_3),LGUI(KC_4),LGUI(KC_5),KC_UNDS,                KC_PLUS, KC_F6,   KC_F7,      KC_F8,      KC_F9,      KC_F10,    KC_F12,  \
-    KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LCBR,                        KC_RCBR, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN,    KC_RPRN,   KC_PIPE, \
-    KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_DEL ,                        KC_DEL,  HHOME,    KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_COLN,   KC_DQT , \
-    KC_LSFT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC ,                        KC_ENT , HEND,    KC_M,       KC_LT,      KC_GT,      KC_QUES,   KC_RSFT, \
-    _______, KC_LGUI, _______, ADJ,             KC_LSFT,   KC_SPC ,LCTL(KC_DEL),        _______,KC_ENT , RAISE,         KC_HOME,    KC_PGDN,    KC_PGUP,   KC_END   \
+    KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_UNDS,                      KC_PLUS, KC_F6  , KC_F7  , KC_F8  , KC_F9,   KC_F10,  KC_F12,  \
+    KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LCBR,                      KC_RCBR, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE, \
+    KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_DEL ,                      KC_DEL ,  HHOME , KC_LEFT, KC_DOWN, KC_RGHT, KC_COLN, KC_DQT , \
+    EISU,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC ,                      KC_ENT , HEND   , KC_M   , KC_LT  , KC_GT,   KC_QUES, KC_RSFT, \
+    _______, KC_LGUI, _______, ADJ,              KC_LSFT, KC_SPC ,LCTL(KC_DEL), _______,KC_ENT , RAISE  ,          KC_HOME, KC_PGDN, KC_PGUP, KC_END   \
   ),
 
   /* Raise
@@ -103,9 +106,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,----------------------------------------------------------------------------------------------------------------------.
    */
   [_RAISE] = LAYOUT(
-    KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_UNDS,                        KC_PLUS, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,  \
+    KC_F11,  LGUI(KC_1),LGUI(KC_2),LGUI(KC_3),LGUI(KC_4),LGUI(KC_5),   KC_UNDS,                        KC_PLUS, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,  \
     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LCBR,                        KC_RCBR, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_F1, \
-    KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_DEL ,                        KC_BSPC, KC_H,    KC_J,    KC_K,    KC_L,    KC_COLN, KC_DQT , \
+    KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_TAB ,                        KC_BSPC, KC_H,    KC_J,    KC_K,    KC_L,    KC_COLN, KC_DQT , \
     KC_LSFT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC ,                        KC_ENT , KC_N,    KC_M,    KC_LT,   KC_GT,   KC_QUES, KC_RSFT, \
     KC_LCTL, KC_LGUI, KC_LALT, EISU,             LOWER,   KC_SPC ,LCTL(KC_BSPC),   KC_SPC,KC_ENT , RAISE,            KC_HOME, KC_PGDN, KC_PGUP, KC_END   \
   ),
