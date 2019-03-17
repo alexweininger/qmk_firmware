@@ -11,20 +11,23 @@ extern keymap_config_t keymap_config;
 #define _RAISE 2
 #define _ADJUST 16
 #define _ARROWS 5
+#define _CODE 3
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
   ADJUST,
-  ARROWS
+  ARROWS,
+  CODE
 };
 
 //Tap Dance Declarations
 enum {
   TD_CAPS = 0,
   TD_HOMEEND,
-  TD_UND
+  TD_UND,
+  TD_EQL
 };
 
 //Tap ``Dance Definitions
@@ -32,12 +35,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   //Tap once for lsft, twice for Caps Lock
   [TD_CAPS]  = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
   [TD_HOMEEND] = ACTION_TAP_DANCE_DOUBLE(KC_HOME, KC_END),
-  [TD_UND] = ACTION_TAP_DANCE_DOUBLE(KC_MINS, KC_UNDS)
+  [TD_UND] = ACTION_TAP_DANCE_DOUBLE(KC_MINS, KC_UNDS),
+  [TD_EQL] = ACTION_TAP_DANCE_DOUBLE(KC_EQL, KC_PLUS)
 // Other declarations would go here, separated by commas, if you have them
 };
 
 #define LOW MO(_LOWER)
 #define RSE MO(_RAISE)
+#define CODE MO(_CODE)
 #define EISU MO(_ADJUST)
 #define ADJ MO(_ADJUST)
 #define ARR MO(_ARROWS)
@@ -48,6 +53,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define HEND LSFT(KC_END)
 #define HOMEEND TD(TD_HOMEEND)
 #define SHIFCAP TD(TD_CAPS)
+#define CPYDWN LSFT(LALT(KC_DOWN))
+#define CPYUP LSFT(LALT(KC_UP))
+#define CURSDWN LCTL(LALT(KC_DOWN))
+#define CURSUP LCTL(LALT(KC_UP))
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Qwerty
@@ -64,11 +74,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,----------------------------------------------------------------------------------------------------------------------.
    */
   [_QWERTY] = LAYOUT(
-    KC_ESC , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , TD(TD_UND),                    KC_EQL , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_BSLS, \
+    KC_ESC , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , TD(TD_UND),                    TD(TD_EQL) , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_BSLS, \
     KC_GRV , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_LBRC,                       KC_RBRC, KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_HOME, \
     TAB_ARR, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , HOMEEND,                       KC_BSPC, KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT, \
-    ARR    , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_LALT,                       KC_LEAD, KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_ENT , \
-    KC_LCTL, KC_LGUI, KC_LALT , KC_LEAD,         SHIFCAP, KC_LCTL, RSE,         KC_SPC, LOW    , SHIFCAP,          KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT  \
+    ARR    , KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_LALT,                       CODE   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_ENT , \
+    KC_LCTL, KC_LGUI, KC_LALT, KC_LEAD,         SHIFCAP, KC_LCTL, RSE,           KC_SPC, LOW    , SHIFCAP,          KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT  \
   ),
 
   /* Lower
@@ -141,7 +151,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,_______,                       _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______, _______, _______,_______,                       _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, LALT(KC_SPC),          _______,_______,_______,       _______,_______, _______,          _______, _______, _______, _______  \
-  )
+  ),
+    [_CODE] = LAYOUT(
+    KC_ESC , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , TD(TD_UND),                    KC_EQL , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_BSLS, \
+    KC_GRV , KC_Q   , KC_W   , KC_E   , CURSUP   , CPYUP   , KC_LBRC,                       KC_RBRC, KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_HOME, \
+    TAB_ARR, KC_A   , KC_S   , KC_D   , KC_F1  , CPYDWN   , HOMEEND,                       KC_BSPC, KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT, \
+    ARR    , KC_Z   , KC_X   , KC_C   , CURSDWN   , KC_B   , KC_LALT,                       CODE   , KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_ENT , \
+    KC_LCTL, KC_LGUI, KC_LALT, KC_LEAD,         SHIFCAP, KC_LCTL, RSE,           KC_SPC, LOW    , SHIFCAP,          KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT  \
+  ),
 
     /* blank layout
   LAYOUT(
